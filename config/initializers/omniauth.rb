@@ -7,7 +7,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            image_aspect_ratio: 'square', image_size: 48, access_type: 'online',
            name: 'google'
 
-  provider :slack, ENV['SLACK_KEY'], ENV['SLACK_SECRET'], scope: 'client'
+  provider :slack, ENV['SLACK_KEY'], ENV['SLACK_SECRET'], scope: 'groups:write'
 end
 
 OmniAuth.config.on_failure = proc do |env|

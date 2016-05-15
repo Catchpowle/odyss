@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(version: 20160426194625) do
 
   create_table "identities", force: :cascade do |t|
-    t.string   "uid",        null: false
-    t.string   "provider",   null: false
+    t.text     "uid",        null: false
+    t.text     "provider",   null: false
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,9 +24,10 @@ ActiveRecord::Schema.define(version: 20160426194625) do
   add_index "identities", ["user_id"], name: "index_identities_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.string   "email",      null: false
-    t.string   "image_url"
+    t.text     "name",       null: false
+    t.text     "email",      null: false
+    t.text     "image_url"
+    t.text     "slack_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
