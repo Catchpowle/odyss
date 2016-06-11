@@ -3,8 +3,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    slack_id = request.env['omniauth.auth']['info']['user_id']
-    current_user.update(slack_id: slack_id)
+    response = request.env['omniauth.auth']
+    slack_id = response['info']['user_id']
+    slack_token = response['credentials']['token']
+    current_user.update(slack_id: slack_id, slack_token: slack_token)
 
     redirect_to root_path
   end

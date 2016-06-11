@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426194625) do
+ActiveRecord::Schema.define(version: 20160515192539) do
+
+  create_table "groups", force: :cascade do |t|
+    t.text     "name"
+    t.text     "objective"
+    t.text     "information"
+    t.text     "slack_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "identities", force: :cascade do |t|
     t.text     "uid",        null: false
@@ -23,13 +32,21 @@ ActiveRecord::Schema.define(version: 20160426194625) do
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id"
 
-  create_table "users", force: :cascade do |t|
-    t.text     "name",       null: false
-    t.text     "email",      null: false
-    t.text     "image_url"
-    t.text     "slack_id"
+  create_table "memberships", force: :cascade do |t|
+    t.string   "user_id"
+    t.string   "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.text     "name",        null: false
+    t.text     "email",       null: false
+    t.text     "image_url"
+    t.text     "slack_id"
+    t.text     "slack_token"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end

@@ -48,15 +48,26 @@ class SessionsController < ApplicationController
 
   def new_identity_sign_in(info)
     user = User.find_by(email: info[:email])
-    user = User.new_with_omniauth(info) if user.nil?
 
-    Slack.new(ENV['SLACK_TOKEN']).invite(user.email)
+    user ? exisiting_user_sign_in(user) : new_user_sign_in(info)
+  end
 
-    user.identities << @identity
-    user.save
+  def exisiting_user_sign_in(user)
+    user_set_up(user)
+    redirect_to root_url, notice: 'Signed in!'
+  end
 
-    self.current_user = user
+  def new_user_sign_in(info)
+    user = User.new_with_omniauth(info)
+    Slack.new(ENV['SLACK_TOKEN']).admin_invite(user.email)
+    user_set_up(user)
 
     redirect_to new_user_path
+  end
+
+  def user_set_up(user)
+    user.identities << @identity
+    user.save
+    self.current_user = user
   end
 end

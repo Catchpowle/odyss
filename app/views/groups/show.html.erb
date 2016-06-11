@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2><%= @group.name %></h2>
+    <% if @membership %>
+      <%= link_to "Leave group", membership_path(@membership, group_id: @group.id),
+          method: :delete, id: "membership-button", class: "btn btn-danger btn-xs", remote: true %>
+    <% else %>
+      <%= link_to "Join group", memberships_path(group_id: @group.id),
+          method: :post, id: "membership-button", class: "btn btn-success btn-xs", remote: true %>
+    <% end %>
+    <%= link_to "Edit group", edit_group_path(@group.id), class: "btn btn-warning btn-xs" %>
+  </div>
+  <div class="panel-body">
+    <p><%= @group.information %></p>
+  </div>
+</div>

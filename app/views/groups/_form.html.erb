@@ -1,0 +1,20 @@
+<div class="panel-body">
+  <%= form_for @group do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :objective %>
+      <%= f.text_area :objective, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :information %>
+      <%= f.text_area :information, class: "form-control" %>
+    </div>
+
+    <%= f.submit class: "btn btn-danger" %>
+  <% end %>
+</div>

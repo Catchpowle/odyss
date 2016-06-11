@@ -1,0 +1,7 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Edit Group</h2>
+    <%= link_to "Delete group", group_path(@group.id), class: "btn btn-danger btn-xs", method: :delete %>
+  </div>
+  <%= render 'form' %>
+</div>

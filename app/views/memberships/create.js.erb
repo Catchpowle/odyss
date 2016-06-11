@@ -1,0 +1,1 @@
+$("#membership-button").replaceWith('<%= link_to "Leave group", membership_path(@membership, group_id: @group.id), method: :delete, id: "membership-button", class: "btn btn-danger btn-xs", remote: true %>');

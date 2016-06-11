@@ -1,0 +1,25 @@
+<% unless current_user %>
+  <%= render "pages/welcome" %>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Groups</h2>
+    <%= link_to "New group", new_group_path, class: "btn btn-danger btn-xs" %>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Objective</th>
+      <th>Members</th>
+    </tr>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= link_to group.name, group_path(group) %></td>
+        <td><%= group.objective %></td>
+        <td><%= group.users.count %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
