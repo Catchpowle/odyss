@@ -9,11 +9,6 @@
           <li><%= image_tag current_user.image_url, alt: current_user.name %></li>
           <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
         </ul>
-      <% else %>
-        <ul class="nav navbar-nav">
-          <li><%= link_to 'Facebook', '/auth/facebook' %></li>
-          <li><%= link_to 'Google+', '/auth/google' %></li>
-        </ul>
       <% end %>
     </div>
   </div>
