@@ -13,10 +13,11 @@ class MembershipsController < ApplicationController
     @membership.destroy
 
     if @group.users.empty?
-      Slack.new(current_user.slack_token).archive(@group.slack_id)
+      leave_slack_group(final_member: true)
       @group.destroy
+      render js: "window.location = '#{groups_path}'"
     else
-      Slack.new(current_user.slack_token).leave(@group.slack_id)
+      leave_slack_group
     end
   end
 
@@ -24,5 +25,14 @@ class MembershipsController < ApplicationController
 
   def membership_params
     params.require(:group).permit(:name, :objective, :information)
+  end
+
+  def leave_slack_group(final_member: false)
+    slack = Slack.new(current_user.slack_token)
+    if final_member
+      slack.archive(@group.slack_id)
+    else
+      slack.leave(@group.slack_id)
+    end
   end
 end

@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_action :authorize_group, only: [:new, :show, :edit]
+
   def index
     @groups = Group.all
   end
@@ -19,11 +21,7 @@ class GroupsController < ApplicationController
     @group.users << current_user
 
     if @group.valid?
-      slack = Slack.new(current_user.slack_token)
-      response = slack.create(@group.name)
-
-      @group.slack_id = response['group']['id']
-      slack.set_purpose(@group.slack_id, @group.objective)
+      create_slack_group
       @group.save
 
       redirect_to group_path(@group)
@@ -39,12 +37,7 @@ class GroupsController < ApplicationController
     @group.assign_attributes(group_params)
 
     if @group.valid?
-      slack = Slack.new(current_user.slack_token)
-      if @group.name_changed?
-        slack.rename(@group.slack_id, @group.name)
-      elsif @group.objective_changed?
-        slack.set_purpose(@group.slack_id, @group.objective)
-      end
+      update_slack_group
       @group.save
 
       redirect_to group_path(@group)
@@ -64,5 +57,26 @@ class GroupsController < ApplicationController
 
   def group_params
     params.require(:group).permit(:name, :objective, :information)
+  end
+
+  def authorize_group
+    authorize Group
+  end
+
+  def create_slack_group
+    slack = Slack.new(current_user.slack_token)
+    response = slack.create(@group.name)
+
+    @group.slack_id = response['group']['id']
+    slack.set_purpose(@group.slack_id, @group.objective)
+  end
+
+  def update_slack_group
+    slack = Slack.new(current_user.slack_token)
+    if @group.name_changed?
+      slack.rename(@group.slack_id, @group.name)
+    elsif @group.objective_changed?
+      slack.set_purpose(@group.slack_id, @group.objective)
+    end
   end
 end

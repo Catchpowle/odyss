@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery with: :exception
 
   rescue_from StandardError, with: lambda { |e|
     request.local? ? raise(e) : internal_error
   }
   rescue_from ActiveRecord::RecordNotFound, with: :routing_error
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def routing_error
     render 'errors/not_found', status: :not_found
@@ -25,6 +27,11 @@ class ApplicationController < ActionController::Base
 
   def signed_in?
     !current_user.nil?
+  end
+
+  def user_not_authorized
+    flash[:alert] = 'You are not authorized to perform this action.'
+    redirect_to(request.referrer || root_path)
   end
 
   def internal_error

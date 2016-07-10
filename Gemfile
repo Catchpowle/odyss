@@ -12,10 +12,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
 gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-facebook'
-gem "omniauth-google-oauth2"
+gem 'omniauth-google-oauth2'
 gem 'omniauth-slack'
-gem "figaro"
-gem "httparty"
+gem 'figaro'
+gem 'httparty'
+gem 'pundit'
 
 group :development, :test do
   gem 'byebug'
@@ -26,7 +27,12 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem "bullet"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'bullet'
+end
+
+group :test do
+  gem 'faker'
+  gem 'minitest-reporters'
 end
