@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get '/auth/slack/callback', to: 'users#create'
   get '/auth/:provider/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+
+  match '*path', to: 'application#routing_error', via: :all
 end

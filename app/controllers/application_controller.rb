@@ -1,7 +1,14 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  rescue_from StandardError, with: lambda { |e|
+    request.local? ? raise(e) : internal_error
+  }
+  rescue_from ActiveRecord::RecordNotFound, with: :routing_error
+
+  def routing_error
+    render 'errors/not_found', status: :not_found
+  end
 
   private
 
@@ -18,5 +25,9 @@ class ApplicationController < ActionController::Base
 
   def signed_in?
     !current_user.nil?
+  end
+
+  def internal_error
+    render 'errors/internal_server_error'
   end
 end
