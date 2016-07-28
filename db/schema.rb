@@ -17,6 +17,8 @@ ActiveRecord::Schema.define(version: 20160515192539) do
     t.text     "name"
     t.text     "objective"
     t.text     "information"
+    t.integer  "limit"
+    t.date     "start_date"
     t.text     "slack_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

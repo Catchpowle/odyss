@@ -10,6 +10,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
 gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'

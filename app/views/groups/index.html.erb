@@ -13,12 +13,14 @@
       <th>Name</th>
       <th>Objective</th>
       <th>Members</th>
+      <th>Start date (dd/mm/yyyy)</th>
     </tr>
     <% @groups.each do |group| %>
       <tr>
         <td><%= link_to group.name, group_path(group) %></td>
         <td><%= group.objective %></td>
-        <td><%= group.users.count %></td>
+        <td><%= "#{group.users.count}/#{group.limit}" %></td>
+        <td><%= group.start_date %></td>
       </tr>
     <% end %>
   </table>

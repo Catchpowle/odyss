@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   before_action :authorize_group, only: [:new, :show, :edit]
 
   def index
-    @groups = Group.all
+    @groups = Group.all.order(:start_date)
   end
 
   def show
@@ -33,6 +33,7 @@ class GroupsController < ApplicationController
   end
 
   def update
+    debugger
     @group = Group.find(params[:id])
     @group.assign_attributes(group_params)
 
@@ -56,7 +57,8 @@ class GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :objective, :information)
+    params.require(:group).permit(:name, :objective, :information, :limit,
+                                  :start_date)
   end
 
   def authorize_group
