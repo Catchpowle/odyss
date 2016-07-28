@@ -11,6 +11,6 @@
     <%= link_to "Edit group", edit_group_path(@group.id), class: "btn btn-warning btn-xs" %>
   </div>
   <div class="panel-body">
-    <p><%= @group.information %></p>
+    <p><%= simple_format(@group.information) %></p>
   </div>
 </div>
