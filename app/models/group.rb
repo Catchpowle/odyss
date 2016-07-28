@@ -5,7 +5,7 @@ class Group < ActiveRecord::Base
   attr_accessor :start_date
 
   def start_date
-    super.strftime('%m/%d/%Y')
+    super.strftime('%m/%d/%Y') if super
   end
 
   def start_date=(value)
