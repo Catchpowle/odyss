@@ -16,8 +16,10 @@
           <%= value %>
         </div>
       <% end %>
-      
+
       <%= yield %>
     </div>
+
+    <%= render "layouts/sign_in_modal" if params[:sign_in] %>
   </body>
 </html>
