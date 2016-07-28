@@ -33,7 +33,6 @@ class GroupsController < ApplicationController
   end
 
   def update
-    debugger
     @group = Group.find(params[:id])
     @group.assign_attributes(group_params)
 
