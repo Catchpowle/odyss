@@ -5,8 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.text :email, null: false
       t.text :image_url
       t.date :start_date
-      t.text :slack_id
-      t.text :slack_token
+      t.text :discord_id
 
       t.timestamps null: false
     end

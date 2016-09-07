@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160515192539) do
     t.text     "information"
     t.integer  "limit"
     t.date     "start_date"
-    t.text     "slack_id"
+    t.text     "discord_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -42,14 +42,13 @@ ActiveRecord::Schema.define(version: 20160515192539) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.text     "name",        null: false
-    t.text     "email",       null: false
+    t.text     "name",       null: false
+    t.text     "email",      null: false
     t.text     "image_url"
     t.date     "start_date"
-    t.text     "slack_id"
-    t.text     "slack_token"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "discord_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

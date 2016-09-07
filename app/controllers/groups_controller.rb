@@ -21,8 +21,7 @@ class GroupsController < ApplicationController
     @group.users << current_user
 
     if @group.valid?
-      create_slack_group
-      @group.save
+      DiscordGroupMediator.create(@group, current_user)
 
       redirect_to group_path(@group)
     end
@@ -37,8 +36,7 @@ class GroupsController < ApplicationController
     @group.assign_attributes(group_params)
 
     if @group.valid?
-      update_slack_group
-      @group.save
+      DiscordGroupMediator.update(@group, current_user)
 
       redirect_to group_path(@group)
     end
@@ -46,9 +44,7 @@ class GroupsController < ApplicationController
 
   def destroy
     @group = Group.find(params[:id])
-    Slack.new(current_user.slack_token).archive(@group.slack_id)
-
-    @group.destroy
+    DiscordGroupMediator.destroy(@group)
 
     redirect_to root_path
   end
@@ -62,22 +58,5 @@ class GroupsController < ApplicationController
 
   def authorize_group
     authorize Group
-  end
-
-  def create_slack_group
-    slack = Slack.new(current_user.slack_token)
-    response = slack.create(@group.name)
-
-    @group.slack_id = response['group']['id']
-    slack.set_purpose(@group.slack_id, @group.objective)
-  end
-
-  def update_slack_group
-    slack = Slack.new(current_user.slack_token)
-    if @group.name_changed?
-      slack.rename(@group.slack_id, @group.name)
-    elsif @group.objective_changed?
-      slack.set_purpose(@group.slack_id, @group.objective)
-    end
   end
 end
