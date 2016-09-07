@@ -6,7 +6,7 @@ class CreateGroups < ActiveRecord::Migration
       t.text :information
       t.integer :limit
       t.date :start_date
-      t.text :slack_id
+      t.text :discord_id
 
       t.timestamps null: false
     end

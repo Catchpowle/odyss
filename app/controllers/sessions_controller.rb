@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
       @identity.save
     end
 
-    if current_user.slack_id
+    if current_user.discord_id
       redirect_to root_path, notice: 'Already signed in!'
     else
       redirect_to new_user_path
@@ -39,7 +39,7 @@ class SessionsController < ApplicationController
   def existing_identity_sign_in
     self.current_user = @identity.user
 
-    if current_user.slack_id
+    if current_user.discord_id
       redirect_to root_url, notice: 'Signed in!'
     else
       redirect_to new_user_path
@@ -59,7 +59,6 @@ class SessionsController < ApplicationController
 
   def new_user_sign_in(info)
     user = User.new_with_omniauth(info)
-    Slack.new(ENV['SLACK_TOKEN']).admin_invite(user.email)
     user_set_up(user)
 
     redirect_to new_user_path
