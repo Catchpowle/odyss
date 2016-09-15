@@ -22,8 +22,9 @@ class GroupsController < ApplicationController
 
     if @group.valid?
       DiscordGroupMediator.create(@group, current_user)
-
       redirect_to group_path(@group)
+    else
+      render :new
     end
   end
 
@@ -37,8 +38,9 @@ class GroupsController < ApplicationController
 
     if @group.valid?
       DiscordGroupMediator.update(@group, current_user)
-
       redirect_to group_path(@group)
+    else
+      render :edit
     end
   end
 
