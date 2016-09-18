@@ -3,5 +3,9 @@
     if($("#sign_in_modal").length > 0) {
       $("#sign_in_modal").modal('show');
     }
+
+    $('.datepicker').datepicker({
+            format: 'M d, yyyy'
+    });
   });
 })();

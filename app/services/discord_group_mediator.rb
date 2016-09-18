@@ -1,13 +1,13 @@
 class DiscordGroupMediator
   def self.create(group, user)
-    response = Discord.create_channel(group.name)
+    response = Discord.create_channel(format_name(group.name))
     group.discord_id = response['id']
     join(group, user)
     group.save
   end
 
   def self.update(group)
-    Discord.modify_channel(group.discord_id, group.name)
+    Discord.modify_channel(group.discord_id, format_name(group.name))
     group.save
   end
 
@@ -26,5 +26,11 @@ class DiscordGroupMediator
     else
       Discord.remove_from_channel(group.discord_id, user.discord_id)
     end
+  end
+
+  private
+
+  def self.format_name(name)
+    name.gsub(" ", "_")
   end
 end

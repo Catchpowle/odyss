@@ -18,6 +18,7 @@ gem 'omniauth-discord', '~> 0.1.3'
 gem 'figaro'
 gem 'httparty'
 gem 'pundit'
+gem 'validates_timeliness', '~> 4.0'
 
 group :development, :test do
   gem 'byebug'

@@ -8,20 +8,22 @@
     <%= link_to "New group", new_group_path, class: "btn btn-danger btn-xs" %>
   </div>
 
-  <table class="table table-striped table-hover">
-    <tr>
-      <th>Name</th>
-      <th>Objective</th>
-      <th>Members</th>
-      <th>Start Date (dd/mm/yyyy)</th>
-    </tr>
-    <% @groups.each do |group| %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover groups-table">
       <tr>
-        <td class="col-md-2"><%= link_to group.name, group_path(group) %></td>
-        <td class="col-md-6"><%= group.objective %></td>
-        <td class="col-md-2"><%= "#{group.users.count}/#{group.limit}" %></td>
-        <td class="col-md-2"><%= group.start_date %></td>
+        <th>Name</th>
+        <th>Objective</th>
+        <th>Members</th>
+        <th>Start Date</th>
       </tr>
-    <% end %>
-  </table>
+      <% @groups.each do |group| %>
+        <tr>
+          <td class="col-md-2"><%= link_to group.name, group_path(group) %></td>
+          <td class="col-md-6"><%= group.objective %></td>
+          <td class="col-md-2"><%= "#{group.users.count}/#{group.limit}" %></td>
+          <td class="col-md-2"><%= group.start_date %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>

@@ -37,7 +37,7 @@ class GroupsController < ApplicationController
     @group.assign_attributes(group_params)
 
     if @group.valid?
-      DiscordGroupMediator.update(@group, current_user)
+      DiscordGroupMediator.update(@group)
       redirect_to group_path(@group)
     else
       render :edit
