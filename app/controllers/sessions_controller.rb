@@ -39,34 +39,55 @@ class SessionsController < ApplicationController
   def existing_identity_sign_in
     self.current_user = @identity.user
 
-    if current_user.discord_id
-      redirect_to root_url, notice: 'Signed in!'
-    else
-      redirect_to new_user_path
-    end
+    redirect
   end
 
   def new_identity_sign_in(info)
     user = User.find_by(email: info[:email])
 
-    user ? exisiting_user_sign_in(user) : new_user_sign_in(info)
+    user ? existing_user_sign_in(user) : new_user_sign_in(info)
   end
 
-  def exisiting_user_sign_in(user)
+  def existing_user_sign_in(user)
     user_set_up(user)
-    redirect_to root_url, notice: 'Signed in!'
+
+    redirect
   end
 
   def new_user_sign_in(info)
     user = User.new_with_omniauth(info)
     user_set_up(user)
 
-    redirect_to new_user_path
+    redirect
   end
 
   def user_set_up(user)
     user.identities << @identity
     user.save
     self.current_user = user
+  end
+
+  def redirect
+    group_id = set_group_id
+    if group_id
+      create_membership
+      redirect_to group_path(group_id)
+    elsif current_user.discord_id
+      redirect_to root_url, notice: 'Signed in!'
+    else
+      redirect_to new_user_path
+    end
+  end
+
+  def set_group_id
+    group_id = cookies[:group_id]
+    cookies.delete(:group_id)
+    group_id
+  end
+
+  def create_membership(group_id)
+    group = Group.find_by(group_id)
+    Membership.create(user: current_user, group: group)
+    DiscordGroupMediator.join(group, current_user)
   end
 end

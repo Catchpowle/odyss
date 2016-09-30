@@ -17,4 +17,8 @@ class Group < ActiveRecord::Base
   def start_date
     super.strftime('%b %d, %Y') if super
   end
+
+  def full?
+    memberships.count.eql?(limit)
+  end
 end

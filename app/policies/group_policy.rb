@@ -1,10 +1,10 @@
 class GroupPolicy < ApplicationPolicy
   def new?
-    user
+    user.groups.exclude?(record)
   end
 
   def edit?
-    user
+    user.groups.include?(record)
   end
 
   def show?

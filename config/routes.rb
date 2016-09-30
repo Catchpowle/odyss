@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root to: 'groups#index'
 
   resources :users, except: [:create]
-  resources :groups
+  resources :groups do
+    get :invite, on: :member
+  end
   resources :memberships, only: [:create, :destroy]
 
   get '/auth/discord/callback', to: 'users#create'

@@ -7,5 +7,10 @@
     $('.datepicker').datepicker({
             format: 'M d, yyyy'
     });
+
+    $('.copy-invite').click(function() {
+      new Clipboard('.copy-invite');
+    });
   });
+
 })();

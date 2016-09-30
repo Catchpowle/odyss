@@ -24,9 +24,25 @@ $jumbotron-bg:                     white;
 }
 
 .navbar-brand {
-     font-weight: bold;
+  font-weight: bold;
 }
 
 .groups-table {
   word-break: break-word;
+}
+
+.share-buttons {
+  margin-top: 10px;
+}
+
+.alert-notice {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert-error {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
 }

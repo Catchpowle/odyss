@@ -28,9 +28,7 @@ class DiscordGroupMediator
     end
   end
 
-  private
-
-  def self.format_name(name)
-    name.gsub(" ", "_")
+  private_class_method def self.format_name(name)
+    name.tr(' ', '_')
   end
 end

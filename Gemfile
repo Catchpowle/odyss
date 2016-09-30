@@ -6,7 +6,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
-gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
@@ -17,12 +16,15 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-discord', '~> 0.1.3'
 gem 'figaro'
 gem 'httparty'
+gem 'draper'
 gem 'pundit'
 gem 'validates_timeliness', '~> 4.0'
+gem 'clipboard-rails'
 
 group :development, :test do
   gem 'byebug'
   gem 'rubocop', require: false
+  gem 'reek'
   gem 'awesome_print'
 end
 

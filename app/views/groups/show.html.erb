@@ -1,16 +1,71 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h2><%= @group.name %></h2>
-    <% if @membership %>
-      <%= link_to "Leave group", membership_path(@membership, group_id: @group.id),
-          method: :delete, id: "membership-button", class: "btn btn-danger btn-xs", remote: true %>
-    <% else %>
-      <%= link_to "Join group", memberships_path(group_id: @group.id),
-          method: :post, id: "membership-button", class: "btn btn-success btn-xs", remote: true %>
-    <% end %>
-    <%= link_to "Edit group", edit_group_path(@group.id), class: "btn btn-warning btn-xs" %>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2><%= @group.name %></h2>
+        <% if @membership %>
+          <%= link_to "Leave group", membership_path(@membership, group_id: @group.id),
+              method: :delete, id: "membership-button", class: "btn btn-danger btn-xs", remote: true %>
+        <% else %>
+          <%= link_to "Join group", memberships_path(group_id: @group.id),
+              method: :post, id: "membership-button", class: "btn btn-success btn-xs", remote: true %>
+        <% end %>
+        <%= link_to "Edit group", edit_group_path(@group.id), class: "btn btn-warning btn-xs" %>
+      </div>
+      <div class="panel-body">
+        <p><%= simple_format(@group.information) %></p>
+      </div>
+    </div>
   </div>
-  <div class="panel-body">
-    <p><%= simple_format(@group.information) %></p>
+
+  <div class="col-md-8">
+    <%= link_to 'Go to group chat', '', class: "btn btn-primary btn-block btn-lg" %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">There's still space in this group, share this invite code with those interested!</h3>
+      </div>
+      <div class="panel-body">
+        <div class="input-group">
+          <input type="text" id="invite-link" value=<%= invite_group_url %> class="form-control invite-link" readonly>
+          <span class="input-group-btn">
+            <button class="btn btn-default copy-invite" data-clipboard-target=".invite-link" type="button">Copy</button>
+          </span>
+        </div>
+        <div class="share-buttons">
+          <div class="fb-send" data-href="https://developers.facebook.com/docs/plugins/" data-size="large"></div>
+          <div class="g-plus" data-action="share" data-annotation="none" data-height="24"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 class="panel-title">Members</h3></div>
+      <div class="panel-body">
+        <div class="container-fluid">
+          <% @group.users.each_slice(3) do |users| %>
+            <div class="row">
+              <% 3.times do |i| %>
+                <% if users[i] %>
+                  <div class="col-md-4">
+                    <div class="panel panel-default">
+                      <div class="panel-heading"><%= users[i].name %></div>
+                      <div class="panel-body">
+                        <div class="list-group">
+                          <%= image_tag users[i].image_url, alt: users[i].name %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

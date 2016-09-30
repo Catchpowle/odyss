@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
 
     if @group.valid?
       DiscordGroupMediator.create(@group, current_user)
-      redirect_to group_path(@group)
+      redirect_to group_path(@group), notice: 'Group created'
     else
       render :new
     end
@@ -38,7 +38,7 @@ class GroupsController < ApplicationController
 
     if @group.valid?
       DiscordGroupMediator.update(@group)
-      redirect_to group_path(@group)
+      redirect_to group_path(@group), notice: 'Group updated'
     else
       render :edit
     end
@@ -48,7 +48,19 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     DiscordGroupMediator.destroy(@group)
 
-    redirect_to root_path
+    redirect_to root_path, notice: 'Grouped deleted'
+  end
+
+  def invite
+    @group = Group.find(params[:id])
+
+    if current_user
+      current_user_invite
+    elsif @group.full?
+      redirect_to group_path(@group), error: 'Group full'
+    else
+      cookies[:group_id] = @group.id
+    end
   end
 
   private
@@ -60,5 +72,20 @@ class GroupsController < ApplicationController
 
   def authorize_group
     authorize Group
+  end
+
+  def current_user_invite
+    if current_user.groups.include?(@group)
+      flash[:error] = "You're already member of this group"
+    else
+      create_membership
+      flash[:notice] = 'Group joined!'
+    end
+    redirect_to group_path(@group)
+  end
+
+  def create_membership
+    Membership.create(user: current_user, group: @group)
+    DiscordGroupMediator.join(@group, current_user)
   end
 end
