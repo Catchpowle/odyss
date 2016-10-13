@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     if current_user.groups.include?(@group)
-      @membership = Membership.where(user: current_user, group: @group)
+      @membership = Membership.find_by(user: current_user, group: @group)
     end
   end
 
@@ -18,9 +18,9 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
-    @group.users << current_user
 
     if @group.valid?
+      Membership.create(user: current_user, group: @group, admin: Time.zone.now)
       DiscordGroupMediator.create(@group, current_user)
       redirect_to group_path(@group), notice: 'Group created'
     else
@@ -72,20 +72,5 @@ class GroupsController < ApplicationController
 
   def authorize_group
     authorize Group
-  end
-
-  def current_user_invite
-    if current_user.groups.include?(@group)
-      flash[:error] = "You're already member of this group"
-    else
-      create_membership
-      flash[:notice] = 'Group joined!'
-    end
-    redirect_to group_path(@group)
-  end
-
-  def create_membership
-    Membership.create(user: current_user, group: @group)
-    DiscordGroupMediator.join(@group, current_user)
   end
 end

@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <h2><%= @group.name %></h2>
         <% if @membership %>
-          <%= link_to "Leave group", membership_path(@membership, group_id: @group.id),
+          <%= link_to "Leave group", membership_path(@membership),
               method: :delete, id: "membership-button", class: "btn btn-danger btn-xs", remote: true %>
         <% else %>
           <%= link_to "Join group", memberships_path(group_id: @group.id),
@@ -26,7 +26,7 @@
       </div>
       <div class="panel-body">
         <div class="input-group">
-          <input type="text" id="invite-link" value=<%= invite_group_url %> class="form-control invite-link" readonly>
+          <input type="text" id="invite-link" value=<%= group_invite_url(@group) %> class="form-control invite-link" readonly>
           <span class="input-group-btn">
             <button class="btn btn-default copy-invite" data-clipboard-target=".invite-link" type="button">Copy</button>
           </span>
@@ -52,10 +52,27 @@
                 <% if users[i] %>
                   <div class="col-md-4">
                     <div class="panel panel-default">
-                      <div class="panel-heading"><%= users[i].name %></div>
+                      <div class="panel-heading">
+                        <%= users[i].name %>
+                        <% if users[i].can_manage_group?(@group) %>
+                          <div>
+                            <span class="label label-default">Admin</span>
+                          </div>
+                        <% end %>
+                      </div>
                       <div class="panel-body">
                         <div class="list-group">
-                          <%= image_tag users[i].image_url, alt: users[i].name %>
+                          <div><%= image_tag users[i].image_url, alt: users[i].name %></div>
+                          <% if current_user.can_manage_user?(users[i], @group) %>
+                            <div>
+                                <button class="btn btn-default btn-xs" type="button">Kick</button>
+                                <% if users[i].can_manage_group?(@group) %>
+                                  <button class="btn btn-default btn-xs" type="button">Remove Admin</button>
+                                <% else %>
+                                  <button class="btn btn-default btn-xs" type="button">Make Admin</button>
+                                <% end %>
+                            </div>
+                          <% end %>
                         </div>
                       </div>
                     </div>

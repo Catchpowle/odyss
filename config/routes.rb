@@ -3,9 +3,16 @@ Rails.application.routes.draw do
 
   resources :users, except: [:create]
   resources :groups do
-    get :invite, on: :member
+    scope module: :groups do
+      get :invite, to: 'invite#show'
+    end
   end
-  resources :memberships, only: [:create, :destroy]
+  resources :memberships, only: [:create, :destroy] do
+    scope module: :memberships do
+      post :admin, to: 'admin#create'
+      delete :admin, to: 'admin#destroy'
+    end
+  end
 
   get '/auth/discord/callback', to: 'users#create'
   get '/auth/:provider/callback', to: 'sessions#create'

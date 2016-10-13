@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  include CurrentUserInvite
+
   def create
     auth = request.env['omniauth.auth']
     @identity = Identity.find_or_create_by(uid: auth[:uid],
@@ -68,26 +70,14 @@ class SessionsController < ApplicationController
   end
 
   def redirect
-    group_id = set_group_id
-    if group_id
-      create_membership
-      redirect_to group_path(group_id)
+    if cookies[:group_id]
+      group = Group.find_by(cookies[:group_id])
+      cookies.delete(:group_id)
+      current_user_invite(group)
     elsif current_user.discord_id
       redirect_to root_url, notice: 'Signed in!'
     else
       redirect_to new_user_path
     end
-  end
-
-  def set_group_id
-    group_id = cookies[:group_id]
-    cookies.delete(:group_id)
-    group_id
-  end
-
-  def create_membership(group_id)
-    group = Group.find_by(group_id)
-    Membership.create(user: current_user, group: group)
-    DiscordGroupMediator.join(group, current_user)
   end
 end

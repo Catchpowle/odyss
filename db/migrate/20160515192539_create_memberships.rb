@@ -3,6 +3,7 @@ class CreateMemberships < ActiveRecord::Migration
     create_table :memberships do |t|
       t.string :user_id
       t.string :group_id
+      t.datetime :admin
 
       t.timestamps null: false
     end

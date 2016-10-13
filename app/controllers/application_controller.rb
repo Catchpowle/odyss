@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   rescue_from StandardError, with: lambda { |e|
     request.local? ? raise(e) : internal_error
   }
-  rescue_from ActiveRecord::RecordNotFound, with: :routing_error
+  rescue_from ActiveRecord::RecordNotFound, with: lambda { |e|
+    request.local? ? raise(e) : routing_error
+  }
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def routing_error
