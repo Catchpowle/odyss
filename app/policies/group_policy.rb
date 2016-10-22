@@ -4,7 +4,7 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.groups.include?(record)
+    user.can_manage_group?(record)
   end
 
   def show?

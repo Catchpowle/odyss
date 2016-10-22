@@ -1,0 +1,14 @@
+<% if @membership.user.eql?(current_user) %>
+  $('.admin-destroy').bind('ajax:success', function() {
+    $(this).closest('.member-info').find('.admin-label').remove();
+    $('.admin-buttons').remove();
+  });
+  <% unless @membership.group.admins? %>
+    $('.group-buttons').append('<%= link_to "Become Admin", membership_admin_path(@membership), class: "admin-create btn btn-default btn-xs", remote: true, method: :post %>')
+  <% end %>
+<% else %>
+  $('.admin-destroy').bind('ajax:success', function() {
+    $(this).closest('.member-info').find('.admin-label').remove();
+    $(this).replaceWith('<%= link_to "Make Admin", membership_admin_path(@membership), class: "admin-create btn btn-default btn-xs", remote: true, method: :post %>')
+  });
+<% end %>

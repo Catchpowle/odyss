@@ -1,1 +1,4 @@
-$("#membership-button").replaceWith('<%= link_to "Leave group", membership_path(@membership, group_id: @group.id), method: :delete, id: "membership-button", class: "btn btn-danger btn-xs", remote: true %>');
+$('#membership-button').replaceWith('<%= link_to "Leave group", membership_path(@membership), method: :delete, id: "membership-button", class: "btn btn-danger btn-xs", remote: true %>');
+$('.members-table').html('<%= j render "groups/table", group: @membership.group %>')
+$('<%= j render "groups/members", membership: @membership, group: @membership.group %>').prependTo('#second-column').hide().slideDown();
+$('.copy-invite').click(function() { new Clipboard('.copy-invite'); });

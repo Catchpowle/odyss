@@ -1,10 +1,11 @@
 class MembershipPolicy < ApplicationPolicy
   def create?
-    debugger
     user.groups.exclude?(record.group)
   end
 
   def destroy?
-    user.groups.include?(record.group)
+    return true if user.eql?(record.user)
+
+    user.can_manage_user?(record.user, record.group)
   end
 end

@@ -1,19 +1,19 @@
 class MembershipsController < ApplicationController
-  before_action :set_group
+  before_action :assign_create_instance_variables, only: [:create]
+  before_action :assign_destroy_instance_variables, only: [:destroy]
 
   def create
-    @membership = Membership.create(user: current_user, group: @group)
     authorize @membership
+    @membership.save
 
     DiscordGroupMediator.join(@group, current_user)
   end
 
   def destroy
-    @membership = Membership.find_by(group: @group, user: current_user)
     authorize @membership
 
     @membership.destroy
-    DiscordGroupMediator.leave(@group, current_user)
+    DiscordGroupMediator.leave(@group, @user)
 
     render_for_group_destroy if @group.destroyed?
   end
@@ -21,15 +21,26 @@ class MembershipsController < ApplicationController
   private
 
   def membership_params
-    params.require(:group).permit(:name, :objective, :information)
+    params.require(:membership).permit(:admin)
   end
 
-  def set_group
-    @group = Group.find_by(params[:group_id])
+  def set_user
+    @user = User.find_by(params[:user_id])
   end
 
   def render_for_group_destroy
     flash[:notice] = 'Group deleted'
     render js: "window.location = '#{groups_path}'"
+  end
+
+  def assign_create_instance_variables
+    @group = Group.find(params[:group_id])
+    @membership = Membership.new(user: current_user, group: @group)
+  end
+
+  def assign_destroy_instance_variables
+    @membership = Membership.find(params[:id])
+    @group = @membership.group
+    @user = @membership.user
   end
 end

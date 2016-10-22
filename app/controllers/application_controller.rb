@@ -2,10 +2,14 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
 
+  before_filter :set_cache_headers
+
   rescue_from StandardError, with: lambda { |e|
     request.local? ? raise(e) : internal_error
   }
-  rescue_from ActiveRecord::RecordNotFound, with: :routing_error
+  rescue_from ActiveRecord::RecordNotFound, with: lambda { |e|
+    request.local? ? raise(e) : routing_error
+  }
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def routing_error
@@ -35,5 +39,13 @@ class ApplicationController < ActionController::Base
 
   def internal_error
     render 'errors/internal_server_error'
+  end
+
+  before_filter :set_cache_headers
+
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 end

@@ -1,1 +1,9 @@
-$("#membership-button").replaceWith('<%= link_to "Join group", memberships_path(group_id: @group.id), method: :post, id: "membership-button", class: "btn btn-success btn-xs", remote: true %>');
+<% if current_user.eql?(@user) %>
+  $("#membership-button").replaceWith('<%= link_to "Join group", memberships_path(group_id: @group.id), method: :post, id: "membership-button", class: "btn btn-success btn-xs", remote: true %>');
+  $('.members-table').html('<%= j render "groups/table", group: @membership.group %>');
+  $('#members-section').slideUp("normal", function() { $(this).remove(); } );
+<% else %>
+  $('.membership-destroy').bind('ajax:success', function() {
+    $(this).closest('.member-info').remove();
+  });
+<% end %>

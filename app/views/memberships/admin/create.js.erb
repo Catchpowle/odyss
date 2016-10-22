@@ -1,0 +1,11 @@
+<% if @membership.group.admins.size.eql?(1) %>
+  $('.admin-create').bind('ajax:success', function() {
+    $(this).remove()
+    $('.members-table').html('<%= j render "groups/table", group: @membership.group %>')
+  });
+<% else %>
+  $('.admin-create').bind('ajax:success', function() {
+    $(this).closest('.member-info').find('.panel-heading').append('<div class="admin-label"><span class="label label-default">Admin</span></div>');
+    $(this).replaceWith('<%= link_to "Remove Admin", membership_admin_path(@membership), class: "admin-destroy btn btn-default btn-xs", remote: true, method: :delete %>');
+  });
+<% end %>

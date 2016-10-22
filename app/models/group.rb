@@ -21,4 +21,12 @@ class Group < ActiveRecord::Base
   def full?
     memberships.count.eql?(limit)
   end
+
+  def admins
+    memberships.where.not(admin: nil)
+  end
+
+  def admins?
+    admins.present?
+  end
 end
