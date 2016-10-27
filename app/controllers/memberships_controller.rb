@@ -5,6 +5,7 @@ class MembershipsController < ApplicationController
   def create
     authorize @membership
     @membership.save
+    track_create
 
     DiscordGroupMediator.join(@group, current_user)
   end
@@ -42,5 +43,9 @@ class MembershipsController < ApplicationController
     @membership = Membership.find(params[:id])
     @group = @membership.group
     @user = @membership.user
+  end
+
+  def track_create
+    @analytics.track(['group_joined', { created: false }])
   end
 end

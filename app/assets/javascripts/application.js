@@ -15,4 +15,5 @@
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker
 //= require clipboard
+//= require js.cookie
 //= require_tree .

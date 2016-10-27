@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration
       t.text :name, null: false
       t.text :email, null: false
       t.text :image_url
-      t.date :start_date
       t.text :discord_id
 
       t.timestamps null: false

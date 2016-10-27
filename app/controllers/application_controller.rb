@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
 
+  around_action :set_analytics_cookie
   before_filter :set_cache_headers
 
   rescue_from StandardError, with: lambda { |e|
@@ -41,11 +42,28 @@ class ApplicationController < ActionController::Base
     render 'errors/internal_server_error'
   end
 
-  before_filter :set_cache_headers
+  def set_analytics_cookie
+    @analytics = AnalyticsManager.new
+
+    yield
+
+    @analytics.identify(current_user.id) if current_user
+
+    cookies[:analytics] = set_cookies
+  end
+
+  def set_cookies
+    if cookies[:analytics]
+      cookie = JSON.parse(cookies[:analytics])
+      (cookie << @analytics.events).to_json
+    else
+      [@analytics.events].to_json
+    end
+  end
 
   def set_cache_headers
-    response.headers["Cache-Control"] = "no-cache, no-store"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
   end
 end

@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20160515192539) do
     t.text     "name",       null: false
     t.text     "email",      null: false
     t.text     "image_url"
-    t.date     "start_date"
     t.text     "discord_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

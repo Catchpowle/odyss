@@ -21,6 +21,7 @@ gem 'draper'
 gem 'pundit'
 gem 'validates_timeliness', '~> 4.0'
 gem 'clipboard-rails'
+gem "js_cookie_rails"
 
 group :development, :test do
   gem 'byebug'

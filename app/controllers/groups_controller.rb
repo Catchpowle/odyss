@@ -24,6 +24,8 @@ class GroupsController < ApplicationController
     if @group.valid?
       Membership.create(user: current_user, group: @group, admin: Time.zone.now)
       DiscordGroupMediator.create(@group, current_user)
+      track_create
+
       redirect_to group_path(@group), notice: 'Group created'
     else
       render :new
@@ -67,5 +69,9 @@ class GroupsController < ApplicationController
 
   def authorize_group_instance
     authorize @group
+  end
+
+  def track_create
+    @analytics.track(['group_joined', { created: true }])
   end
 end

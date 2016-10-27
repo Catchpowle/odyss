@@ -16,6 +16,8 @@ class SessionsController < ApplicationController
 
   def destroy
     self.current_user = nil
+    track_destroy
+
     redirect_to root_url, notice: 'Signed out!'
   end
 
@@ -40,6 +42,7 @@ class SessionsController < ApplicationController
 
   def existing_identity_sign_in
     self.current_user = @identity.user
+    track_sign_in
 
     redirect
   end
@@ -52,6 +55,7 @@ class SessionsController < ApplicationController
 
   def existing_user_sign_in(user)
     user_set_up(user)
+    track_sign_in
 
     redirect
   end
@@ -59,6 +63,7 @@ class SessionsController < ApplicationController
   def new_user_sign_in(info)
     user = User.new_with_omniauth(info)
     user_set_up(user)
+    track_sign_up
 
     redirect
   end
@@ -79,5 +84,24 @@ class SessionsController < ApplicationController
     else
       redirect_to new_user_path
     end
+  end
+
+  def track_destroy
+    @analytics.reset(true)
+  end
+
+  def track_sign_up
+    @analytics.alias(current_user.id)
+    attributes = {
+      '$name' => current_user.name,
+      '$created' => current_user.created_at.strftime('%Y-%m-%dT%H:%M:%S'),
+      '$email' => current_user.email
+    }
+    @analytics.people_set(attributes)
+    @analytics.track(['signed_up', { provider: @identity.provider }])
+  end
+
+  def track_sign_in
+    @analytics.track(['signed_in', { provider: @identity.provider }])
   end
 end
