@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root to: 'groups#index'
 
-  resources :users, except: [:create]
+  resources :users, except: [:create] do
+    scope module: :users do
+      get :notifications, to: 'notifications#index'
+    end
+  end
   resources :groups do
     scope module: :groups do
       get :invite, to: 'invite#show'

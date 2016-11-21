@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.3.1"
+ruby '2.3.1'
 
 gem 'rails', '4.2.5'
 gem 'sqlite3'
@@ -19,9 +19,10 @@ gem 'figaro'
 gem 'httparty'
 gem 'draper'
 gem 'pundit'
+gem 'public_activity'
 gem 'validates_timeliness', '~> 4.0'
 gem 'clipboard-rails'
-gem "js_cookie_rails"
+gem 'js_cookie_rails'
 
 group :development, :test do
   gem 'byebug'

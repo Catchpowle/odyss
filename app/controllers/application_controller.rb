@@ -13,21 +13,17 @@ class ApplicationController < ActionController::Base
   }
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  def routing_error
-    render 'errors/not_found', status: :not_found
+  helper_method :current_user, :signed_in?
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   private
 
-  helper_method :current_user, :signed_in?
-
   def current_user=(user)
     @current_user = user
     session[:user_id] = user.nil? ? nil : user.id
-  end
-
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def signed_in?
@@ -36,6 +32,10 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     redirect_to groups_path(sign_in: true)
+  end
+
+  def routing_error
+    render 'errors/not_found', status: :not_found
   end
 
   def internal_error
