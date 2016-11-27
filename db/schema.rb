@@ -14,11 +14,11 @@
 ActiveRecord::Schema.define(version: 20160515192539) do
 
   create_table "groups", force: :cascade do |t|
-    t.text     "name"
-    t.text     "objective"
-    t.text     "information"
-    t.integer  "limit"
-    t.date     "start_date"
+    t.text     "name",        null: false
+    t.text     "objective",   null: false
+    t.text     "information", null: false
+    t.integer  "limit",       null: false
+    t.date     "start_date",  null: false
     t.text     "discord_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -35,12 +35,15 @@ ActiveRecord::Schema.define(version: 20160515192539) do
   add_index "identities", ["user_id"], name: "index_identities_on_user_id"
 
   create_table "memberships", force: :cascade do |t|
-    t.string   "user_id"
-    t.string   "group_id"
+    t.integer  "user_id"
+    t.integer  "group_id"
     t.datetime "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "memberships", ["group_id"], name: "index_memberships_on_group_id"
+  add_index "memberships", ["user_id"], name: "index_memberships_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.text     "name",       null: false

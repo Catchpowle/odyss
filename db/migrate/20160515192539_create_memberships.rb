@@ -1,8 +1,8 @@
 class CreateMemberships < ActiveRecord::Migration
   def change
     create_table :memberships do |t|
-      t.string :user_id
-      t.string :group_id
+      t.references :user, index: true, foreign_key: true
+      t.references :group, index: true, foreign_key: true
       t.datetime :admin
 
       t.timestamps null: false
