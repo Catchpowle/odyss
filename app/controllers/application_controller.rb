@@ -35,7 +35,13 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    redirect_to groups_path(sign_in: true)
+    if current_user
+      flash[:error] = 'Please link your account with Discord to continue.'
+      redirect_to new_user_path
+    else
+      cookies[:unauthorized] = true
+      redirect_to groups_path
+    end
   end
 
   def internal_error

@@ -2,37 +2,9 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    raise Pundit::NotAuthorizedError, "must be logged in" unless user
+    raise Pundit::NotAuthorizedError, "must be logged in" unless user && user.discord_id
     @user = user
     @record = record
-  end
-
-  def index?
-    false
-  end
-
-  def show?
-    scope.where(:id => record.id).exists?
-  end
-
-  def create?
-    false
-  end
-
-  def new?
-    create?
-  end
-
-  def update?
-    false
-  end
-
-  def edit?
-    update?
-  end
-
-  def destroy?
-    false
   end
 
   def scope
