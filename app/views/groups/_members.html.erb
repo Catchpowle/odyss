@@ -1,6 +1,6 @@
 <% if membership %>
   <div id="members-section" >
-    <%= link_to 'Go to group chat', '', class: "btn group-button btn-primary btn-block btn-lg" %>
+    <%= link_to 'Go to group chat', "https://discordapp.com/channels/208586716414476288/#{group.discord_id}", class: "btn group-button btn-primary btn-block btn-lg", target: "_blank" %>
     <% unless group.full? %>
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -8,7 +8,7 @@
         </div>
         <div class="panel-body">
           <div class="input-group">
-            <input type="text" id="invite-link" value=<%= group_invite_url(@group) %> class="form-control invite-link" readonly>
+            <input type="text" id="invite-link" value=<%= group_invite_url(group) %> class="form-control invite-link" readonly>
             <span class="input-group-btn">
               <button class="btn btn-default copy-invite" data-clipboard-target=".invite-link" type="button">Copy</button>
             </span>
