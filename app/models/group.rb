@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
   has_many :memberships
   has_many :users, through: :memberships
+  has_many :notifications, as: :notifiable
 
   validates :name, :objective, :limit, :start_date, presence: true
   validates :name, length: { maximum: 12 }

@@ -6,6 +6,7 @@ class MembershipsController < ApplicationController
     authorize @membership
     @membership.save
     track_create
+    MembershipNotificationManager.notify_users(current_user, @group)
 
     DiscordGroupMediator.join(@group, current_user)
   end

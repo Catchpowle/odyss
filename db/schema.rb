@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160515192539) do
+ActiveRecord::Schema.define(version: 20161203124425) do
 
   create_table "groups", force: :cascade do |t|
     t.text     "name",        null: false
@@ -44,6 +44,28 @@ ActiveRecord::Schema.define(version: 20160515192539) do
 
   add_index "memberships", ["group_id"], name: "index_memberships_on_group_id"
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id"
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "notifiable_id"
+    t.string   "notifiable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notifications", ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
+  add_index "notifications", ["sender_id"], name: "index_notifications_on_sender_id"
+
+  create_table "notifications_users", force: :cascade do |t|
+    t.integer  "notification_id"
+    t.integer  "user_id"
+    t.boolean  "read"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notifications_users", ["notification_id"], name: "index_notifications_users_on_notification_id"
+  add_index "notifications_users", ["user_id"], name: "index_notifications_users_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.text     "name",       null: false
