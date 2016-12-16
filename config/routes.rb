@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root to: 'groups#index'
 
-  resources :users, except: [:create]
+  resources :users, except: [:create] do
+    scope module: :users do
+      resources :notifications, only: [:index]
+    end
+  end
   resources :groups do
     scope module: :groups do
       get :invite, to: 'invite#show'
@@ -12,6 +16,9 @@ Rails.application.routes.draw do
       post :admin, to: 'admin#create'
       delete :admin, to: 'admin#destroy'
     end
+  end
+  resources :notifications_users, only: [] do
+    patch :update, on: :collection
   end
 
   get '/auth/discord/callback', to: 'users#create'

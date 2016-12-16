@@ -1,0 +1,17 @@
+(function(){
+  $(document).ready(function(){
+    $('.notifications').on('show.bs.dropdown', function(){
+      $.ajax({
+        method: "PATCH",
+        url: "/notifications_users",
+        data: { notifications_user: { read: true } }
+      });
+    });
+
+    $('.notifications').on('hide.bs.dropdown', function(){
+      console.log("hey");
+      $('.notifications .unread').removeClass('unread').addClass('read');
+      $('#notification-count').remove();
+    });
+  });
+})();

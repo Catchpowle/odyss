@@ -25,4 +25,12 @@ class User < ActiveRecord::Base
 
     membership.admin < users_membership.admin
   end
+
+  def unread_notifications?
+    notifications_users.where(read: false).present?
+  end
+
+  def unread_notifications_count
+    notifications_users.where(read: false).count
+  end
 end

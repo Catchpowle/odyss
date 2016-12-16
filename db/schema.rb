@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(version: 20161203124425) do
   create_table "notifications_users", force: :cascade do |t|
     t.integer  "notification_id"
     t.integer  "user_id"
-    t.boolean  "read"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.boolean  "read",            default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "notifications_users", ["notification_id"], name: "index_notifications_users_on_notification_id"
