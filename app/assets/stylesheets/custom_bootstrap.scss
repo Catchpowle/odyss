@@ -85,3 +85,11 @@ $jumbotron-bg:                     white;
 #notification-count {
   background-color: #c0392b;
 }
+
+#profile-image {
+  border-radius: 50%;
+  height: 80%;
+  width: 80%;
+  position:relative;
+  top: 0.2em;
+}

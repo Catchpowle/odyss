@@ -22,7 +22,7 @@
               <li class="center"><%= link_to "See All", user_notifications_path(user_id: current_user.id) %></li>
             </ul>
           </li>
-          <li><%= image_tag current_user.image_url, alt: current_user.name %></li>
+          <li><%= image_tag current_user.image_url, alt: current_user.name, id: "profile-image" %></li>
           <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
         </ul>
       <% end %>
