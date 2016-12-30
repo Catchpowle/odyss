@@ -14,8 +14,8 @@
             </span>
           </div>
           <div class="share-buttons">
-            <div class="fb-send" data-href="https://developers.facebook.com/docs/plugins/" data-size="large"></div>
-            <div class="g-plus" data-action="share" data-annotation="none" data-height="24"></div>
+            <%= link_to "Share on Twitter", "https://twitter.com/intent/tweet", class: "btn btn-sm btn-twitter share-button" %>
+            <%= link_to "Share on Facebook", "http://www.facebook.com/sharer/sharer.php?u=#{group_invite_url(group)}&t=Odyss", class: "btn btn-sm btn-facebook share-button" %>
           </div>
         </div>
       </div>
