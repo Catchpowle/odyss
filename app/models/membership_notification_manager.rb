@@ -5,6 +5,8 @@ class MembershipNotificationManager
 
       notification = Notification.new(sender: sender, notifiable: group)
       user.notifications << notification
+
+      NotificationMailer.new_membership(user, sender, group).deliver_later
     end
   end
 end
