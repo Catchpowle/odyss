@@ -9,6 +9,14 @@ class User < ActiveRecord::Base
     new(name: info[:name], email: info[:email], image_url: info[:image])
   end
 
+  def first_name
+    name.split[0]
+  end
+
+  def last_name
+    name.split[1]
+  end
+
   def can_manage_group?(group)
     membership = memberships.find_by(group: group)
 

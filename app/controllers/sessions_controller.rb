@@ -63,6 +63,7 @@ class SessionsController < ApplicationController
   def new_user_sign_in(info)
     user = User.new_with_omniauth(info)
     user_set_up(user)
+    SubscribeUserToMailingListJob.perform_later(user)
     track_sign_up
 
     redirect

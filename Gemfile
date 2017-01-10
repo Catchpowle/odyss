@@ -22,6 +22,7 @@ gem 'validates_timeliness', '~> 4.0'
 gem 'clipboard-rails'
 gem 'js_cookie_rails'
 gem 'sparkpost_rails'
+gem "gibbon"
 
 group :development, :test do
      gem 'sqlite3'
