@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require handlebars.runtime
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker
 //= require clipboard

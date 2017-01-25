@@ -21,3 +21,6 @@
 
 # Ignore byebug history
 /.byebug_history
+
+# Ignore redis dump
+/dump.rdb

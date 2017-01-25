@@ -10,6 +10,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
+gem 'handlebars_assets'
 gem 'omniauth-oauth2', '~> 1.4'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
@@ -22,7 +23,13 @@ gem 'validates_timeliness', '~> 4.0'
 gem 'clipboard-rails'
 gem 'js_cookie_rails'
 gem 'sparkpost_rails'
-gem "gibbon"
+gem 'gibbon'
+gem 'sidekiq'
+gem 'foreman'
+
+# GraphQL
+gem 'graphql'
+gem 'graphiql-rails'
 
 group :development, :test do
      gem 'sqlite3'

@@ -1,6 +1,14 @@
 <% if membership %>
   <div id="members-section" >
-    <%= link_to 'Go to group chat', "https://discordapp.com/channels/208586716414476288/#{group.discord_id}", class: "btn group-button btn-primary btn-block btn-lg", target: "_blank" %>
+    <div id="group-link" class="center">
+      <% if group.discord_id %>
+        <%= link_to 'Go to group chat', "https://discordapp.com/channels/208586716414476288/#{group.discord_id}", class: "btn group-button btn-primary btn-block btn-lg", target: "_blank" %>
+      <% else %>
+        <div id="group-link-loader">
+          <span>Creating group chat! <%= image_tag "hourglass.svg" %></span>
+        </div>
+      <% end %>
+    </div>
     <% unless group.full? %>
       <div class="panel panel-default">
         <div class="panel-heading">

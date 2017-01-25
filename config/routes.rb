@@ -1,4 +1,13 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  namespace :api, path: '' do
+    post '/api', to: 'graphql#query'
+    mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/api' if Rails.env.development?
+  end
+
+  mount Sidekiq::Web => '/sidekiq', constraints: lambda { |request| request.session[:user_id].eql?(1) }
+
   root to: 'groups#index'
 
   resources :users, except: [:create] do
