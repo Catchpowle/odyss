@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_raven_context
-    return if current_user
+    return unless current_user
 
     Raven.user_context(id: current_user.id, email: current_user.email)
   end
