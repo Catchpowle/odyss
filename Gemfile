@@ -27,6 +27,9 @@ gem 'gibbon'
 gem 'sidekiq'
 gem 'foreman'
 
+# Bug tracking
+gem 'sentry-raven'
+
 # GraphQL
 gem 'graphql'
 gem 'graphiql-rails'

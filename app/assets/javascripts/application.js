@@ -17,4 +17,5 @@
 //= require bootstrap-datepicker
 //= require clipboard
 //= require js.cookie
+//= require ./sentry.js
 //= require_tree .

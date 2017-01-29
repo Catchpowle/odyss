@@ -2,8 +2,9 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
 
+  before_action :set_cache_headers
+  before_action :set_raven_context
   around_action :set_analytics_cookie
-  before_filter :set_cache_headers
 
   rescue_from StandardError, with: lambda { |e|
     request.local? ? raise(e) : internal_error
@@ -58,6 +59,18 @@ class ApplicationController < ActionController::Base
     cookies[:analytics] = set_cookies
   end
 
+  def set_raven_context
+    return if current_user
+
+    Raven.user_context(id: current_user.id, email: current_user.email)
+  end
+
+  def set_cache_headers
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
+  end
+
   def set_cookies
     if cookies[:analytics]
       cookie = JSON.parse(cookies[:analytics])
@@ -65,11 +78,5 @@ class ApplicationController < ActionController::Base
     else
       [@analytics.events].to_json
     end
-  end
-
-  def set_cache_headers
-    response.headers['Cache-Control'] = 'no-cache, no-store'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
   end
 end
