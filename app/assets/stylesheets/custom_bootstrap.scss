@@ -87,16 +87,29 @@ $jumbotron-bg:                     white;
   top: 242px;/* push to bottom */
 }
 
+.profile-panel {
+  width: 210px;
+
+  img {
+    margin-bottom: 10px;
+    border-radius: 5%;
+    height: 178px;
+    width: 178px;
+  }
+}
+
 #notification-count {
   background-color: #c0392b;
 }
 
 #profile-image {
   border-radius: 50%;
-  height: 80%;
-  width: 80%;
+  // height: 80%;
+  // width: 80%;
   position:relative;
   top: 0.2em;
+  height: 40px;
+  width: 40px;
 }
 
 #group-link {

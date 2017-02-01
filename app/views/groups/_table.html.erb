@@ -7,7 +7,7 @@
           <% 3.times do |i| %>
             <% if users[i] %>
               <div class="member-info col-md-4">
-                <div class="panel panel-default">
+                <div class="panel panel-default profile-panel">
                   <div class="panel-heading">
                     <%= users[i].name %>
                     <% if users[i].can_manage_group?(group) %>
@@ -17,21 +17,19 @@
                     <% end %>
                   </div>
                   <div class="panel-body">
-                    <div class="list-group">
-                      <div><%= image_tag users[i].image_url, alt: users[i].name %></div>
-                      <% if current_user.can_manage_user?(users[i], group) %>
-                        <div class="admin-buttons">
-                          <% unless current_user.eql?(users[i]) %>
-                          <%= link_to "Kick", membership_path(Membership.find_by(user: users[i], group: group)), method: :delete, class: "membership-destroy btn btn-danger btn-xs", remote: true %>
-                          <% end %>
-                          <% if users[i].can_manage_group?(group) %>
-                            <%= link_to "Remove Admin", membership_admin_path(Membership.find_by(user: users[i], group: group)), class: "admin-destroy btn btn-default btn-xs", remote: true, method: :delete %>
-                          <% else %>
-                            <%= link_to "Make Admin", membership_admin_path(Membership.find_by(user: users[i], group: group)), class: "admin-create btn btn-default btn-xs", remote: true, method: :post %>
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div>
+                    <div><%= image_tag users[i].image_url, alt: users[i].name %></div>
+                    <% if current_user.can_manage_user?(users[i], group) %>
+                      <div class="admin-buttons">
+                        <% unless current_user.eql?(users[i]) %>
+                        <%= link_to "Kick", membership_path(Membership.find_by(user: users[i], group: group)), method: :delete, class: "membership-destroy btn btn-danger btn-xs", remote: true %>
+                        <% end %>
+                        <% if users[i].can_manage_group?(group) %>
+                          <%= link_to "Remove Admin", membership_admin_path(Membership.find_by(user: users[i], group: group)), class: "admin-destroy btn btn-default btn-xs", remote: true, method: :delete %>
+                        <% else %>
+                          <%= link_to "Make Admin", membership_admin_path(Membership.find_by(user: users[i], group: group)), class: "admin-create btn btn-default btn-xs", remote: true, method: :post %>
+                        <% end %>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
               </div>
