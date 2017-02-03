@@ -15,8 +15,9 @@
       new Clipboard('.copy-invite')
     })
 
-    $('.share-button').click(() => {
-      window.open(this.href, '', 'left=300,top=200,menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=250,width=600')
+    $('.share-button').click(function () {
+      const windowFeatures = 'left=300,top=200,menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=250,width=600'
+      window.open(this.href, '', windowFeatures)
       return false
     });
 

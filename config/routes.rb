@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/api' if Rails.env.development?
   end
 
-  mount Sidekiq::Web => '/sidekiq', constraints: lambda { |request| request.session[:user_id].eql?(1) }
+  mount Sidekiq::Web => '/sidekiq'
 
   root to: 'groups#index'
 

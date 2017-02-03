@@ -22,8 +22,8 @@
             </span>
           </div>
           <div class="share-buttons">
-            <%= link_to "Share on Twitter", "https://twitter.com/intent/tweet", class: "btn btn-sm btn-twitter share-button" %>
-            <%= link_to "Share on Facebook", "http://www.facebook.com/sharer/sharer.php?u=#{group_invite_url(group)}&t=Odyss", class: "btn btn-sm btn-facebook share-button" %>
+            <%= link_to "Share on Twitter", twitter_share_url(group), class: "btn btn-sm btn-twitter share-button" %>
+            <%= link_to "Share on Facebook", facebook_share_url(group), class: "btn btn-sm btn-facebook share-button" %>
           </div>
         </div>
       </div>
